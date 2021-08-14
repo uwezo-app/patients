@@ -6,7 +6,7 @@
 export type RootStackParamList = {
   Root: undefined;
   NotFound: undefined;
-  ContactsScreen:undefined;
+  Psychs:undefined;
   ChatRoom:undefined;
   Registration:undefined;
   Login:undefined;
@@ -15,21 +15,20 @@ export type RootStackParamList = {
   EditProfileScreen:undefined;
   PasswordReset:undefined;
   GetEmail:undefined;
+  Swipe:undefined;
 };
 
 export type MainTabParamList = {
-  Camera: undefined;
   Chats: undefined;
-  Calls: undefined;
-  Status:undefined;
+  Psychologists:undefined;
 };
 
 export type ChatParamList = {
   ChatScreen: undefined;
 };
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+export type CategoryParamList = {
+  Category: undefined;
 };
 
 export type User={
@@ -37,6 +36,17 @@ export type User={
   name:String;
   imageUri:String;
   status:String;
+}
+export type Categories={
+  id:String;
+  imageUri:String;
+  category:String;
+}
+export type Psychologists={
+  id:String;
+  name:String;
+  imageUri:String;
+  category:String;
 }
 
 export type Message={

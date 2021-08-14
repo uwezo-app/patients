@@ -12,14 +12,14 @@ const ChatRoomScreen=()=> {
     console.log(route.params)
     
     return(
-      <View>
-        <FlatList
-            data={chatRoomData.messages}
-            renderItem={({item})=><ChatMessage message={item}
-            inverted/>}
-            />
-            <InputBox/> 
-          </View>
+     
+        <><FlatList
+        data={chatRoomData.messages}
+        renderItem={({ item }) => <ChatMessage message={item}
+          inverted />} /><View style={{}}>
+          <InputBox />
+        </View></>
+        
        
     );
 }

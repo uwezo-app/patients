@@ -1,4 +1,4 @@
-export default [{
+export default{"Users": [{
     id: '1',
     users: [{
       id: 'u1',
@@ -142,5 +142,5 @@ export default [{
       content: 'Meet me at the same place',
       createdAt: '2020-09-25T15:40:00.000Z',
     },
-  }]
+  }]}
   

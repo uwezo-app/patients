@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text,View,Image,TouchableWithoutFeedback,Button, TouchableOpacity } from 'react-native';
+import { Text,View,Image,TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { User } from '../../types';
 import styles from './style';
 import { useNavigation } from '@react-navigation/native';

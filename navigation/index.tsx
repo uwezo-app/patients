@@ -17,7 +17,6 @@
  import LinkingConfiguration from './LinkingConfiguration';
  import MainTabNavigator from './MainTabNavigator';
  import ChatRoomScreen from '../screens/ChatRoomScreen'
- import ContactsScreen from '../screens/ContactsScreen';
  import LandingPage from '../components/HomePage/LandingPage';
  import Login from '../components/Login/Login';
  import Registration from '../components/Registration/Registration';
@@ -26,6 +25,8 @@
  import { useState } from 'react';
  import GetEmail from '../components/Password Reset/GetEmail';
  import PasswordReset from '../components/Password Reset/PasswordReset';
+import Psychologists from '../screens/Psychologists';
+import SwipeScreen from '../screens/Swipes';
  
  export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
      
@@ -92,11 +93,7 @@
        options={({ route})=>({title:route.params.name,})} 
      
        />
-       <Stack.Screen 
-       name="ContactsScreen" 
-       component={ContactsScreen} 
-          
-       />
+      
        <Stack.Screen 
        name="ProfileScreen" 
        component={ProfileScreen} 
@@ -137,7 +134,7 @@
        >
          <View style={styles.centeredView}>
            <View style={styles.modalView}>
-             <Text style={styles.modalText}>Are you sure you want to delete this account?</Text>
+             <Text style={styles.modalText}>Are you sure you want to delete your account?</Text>
              <Pressable
                style={[styles.button, styles.buttonClose]}
                onPress={() => setModalVisible(!modalVisible)}
@@ -170,6 +167,14 @@
        <Stack.Screen 
        name="Login" 
        component={Login}   
+       />
+       <Stack.Screen 
+       name="Swipe" 
+       component={SwipeScreen}   
+       />
+        <Stack.Screen 
+       name="Psychs" 
+       component={Psychologists}   
        />
        <Stack.Screen 
        name="Registration" 

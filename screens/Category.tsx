@@ -2,18 +2,18 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import ChatListItem from '../components/ChatListItem';
+import CategoryListItem from '../components/CategoryListItem';
 
 
-import chatRooms from '../data/ChatRooms'
+import categories from '../data/Categories'
 
-export default function ChatScreen() {
+export default function Category() {
   return (
     <View style={styles.container}>
       <FlatList 
       style={{width:'100%'}}
-        data={chatRooms} 
-        renderItem={({item})=> <ChatListItem chatRoom={item}/>}
+        data={categories} 
+        renderItem={({item})=> <CategoryListItem categories={item}/>}
         keyExtractor={(item)=>item.id}
         />
     </View>

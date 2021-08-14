@@ -2,20 +2,21 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import ChatListItem from '../components/ChatListItem';
+import PsychsListItem from '../components/PsychsListItem';
 
 
-import chatRooms from '../data/ChatRooms'
+import psychologists from '../data/Psychologists'
 
-export default function ChatScreen() {
+export default function Psychologists() {
   return (
     <View style={styles.container}>
       <FlatList 
       style={{width:'100%'}}
-        data={chatRooms} 
-        renderItem={({item})=> <ChatListItem chatRoom={item}/>}
+        data={psychologists } 
+        renderItem={({item})=> <PsychsListItem psychologists={item}/>}
         keyExtractor={(item)=>item.id}
         />
+        
     </View>
   );
 }

@@ -13,7 +13,7 @@ const LandingPage =()=> {
     navigation.navigate('Registration')
  }
  const onClick1=()=>{
-  navigation.navigate('Login');
+  navigation.navigate('Psychologists');
 }
   
     return (
