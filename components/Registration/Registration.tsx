@@ -10,9 +10,7 @@ import { FontAwesome, Fontisto, Ionicons, MaterialIcons } from '@expo/vector-ico
 
 
 interface FormData{
-  FirstName:string;
-  LastName:string;
-  Email:string;
+  UserName:string;
   Password:string;
   Cpassword:string;
 
@@ -22,9 +20,7 @@ export default function Registration() {
   const navigation =useNavigation();
     const {control,formState: { errors }, handleSubmit, getValues}= useForm<FormData>({
       defaultValues:{
-        FirstName: "",
-        LastName: "",
-        Email: "",
+        UserName: "",
         Password:"",
         Cpassword:""
 
@@ -87,54 +83,22 @@ export default function Registration() {
          required: true,
         }}
         render={({ field: { onChange, onBlur } }) => (
-          <TextInput placeholder="First Name" style={styles.textInput} autoCompleteType="name" onChangeText={onChange} onBlur={onBlur}
+          <TextInput placeholder="Set a Username" style={styles.textInput} autoCompleteType="name" onChangeText={onChange} onBlur={onBlur}
           />
          )}
-         name="FirstName" 
+         name="UserName" 
          defaultValue=""
         />
        
-        {errors.FirstName &&  <Text>Required</Text>}
+        {errors.UserName &&  <Text>Required</Text>}
 </View> 
 
      
 
-<View style={styles.action}>
-        <Ionicons name="person" color={'black'} size={15} />
-        <Controller
-        control={control}
-        rules={{
-         required: true,
-        }}
-        render={({ field: { onChange, onBlur } }) => (
-          <TextInput placeholder="LastName" style={styles.textInput} autoCompleteType="name" onChangeText={onChange} onBlur={onBlur}
-          />
-         )}
-         name="LastName" 
-         defaultValue=""
-        />
-       
-        {errors.FirstName &&  <Text>Required</Text>}
-</View>    
+  
      
 
-      <View style={styles.action}>
-      <MaterialIcons name="email" color={'black'} size={15} />
-        <Controller
-        control={control}
-        rules={{
-         required: true,
-        }}
-        render={({ field: { onChange, onBlur } }) => (
-          <TextInput placeholder="Email" style={styles.textInput} autoCompleteType="email" onChangeText={onChange} onBlur={onBlur}
-          />
-         )}
-         name="Email" 
-         defaultValue=""
-        />
-       
-        {errors.Email &&  <Text>Required</Text>}
-     </View>
+      
 
      
    

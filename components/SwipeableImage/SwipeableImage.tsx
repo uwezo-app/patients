@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
     borderRadius: 20,
+    backgroundColor:'black'
   },
   textContainer: {
     position: 'absolute',

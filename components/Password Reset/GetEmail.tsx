@@ -4,14 +4,14 @@ import styles from'./styles'
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity,Text, View, Image} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Ionicons} from '@expo/vector-icons';
 
 
 
 
 
 interface FormData{
-  Email:string;
+  UserName:string;
  }
 
 const GetEmail = () => {
@@ -21,14 +21,14 @@ const GetEmail = () => {
  }
     const { control,formState: { errors }, handleSubmit}= useForm({
       defaultValues:{
-        Email: "",
+        UserName: "",
       }
     });
 
      const[submitting, setSubmitting]= useState<boolean>(false);
       
     
-     const onSubmit= async ({Email}: FormData)=>{
+     const onSubmit= async ({UserName}: FormData)=>{
       if(!submitting){
         setSubmitting(true);
         setServerErrors([]);
@@ -39,7 +39,7 @@ const GetEmail = () => {
             headers:{
               "Content-type":"application/json"
             },
-            body:JSON.stringify({Email}),
+            body:JSON.stringify({UserName}),
           }
         );
         const data= await response.json();
@@ -47,7 +47,7 @@ const GetEmail = () => {
         if(data.status===200){
           navigation.navigate('Root');
         }else{
-          console.log(" Email or Password is Incorrect");
+          console.log(" Username or Password is Incorrect");
          
         }
       }
@@ -74,23 +74,23 @@ const GetEmail = () => {
      <Text style={{ alignSelf:'center', marginTop: 70, fontSize: 15}}></Text>
        
      
-      <View style={styles.action}>
-      <MaterialIcons name="email" color={'black'} size={30} />
-      <Controller
+     <View style={styles.action}>
+       <Ionicons name="person" color={'black'} size={15} />
+       <Controller
         control={control}
         rules={{
          required: true,
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput placeholder="Email" style={styles.textInput} autoCompleteType="email" onChangeText={onChange} onBlur={onBlur}
+        render={({ field: { onChange, onBlur } }) => (
+          <TextInput placeholder="Set a Username" style={styles.textInput} autoCompleteType="name" onChangeText={onChange} onBlur={onBlur}
           />
          )}
-         name="Email" 
+         name="UserName" 
          defaultValue=""
         />
        
-        {errors.Email &&  <Text>Required</Text>}
-     </View>
+        {errors.UserName &&  <Text>Required</Text>}
+</View> 
 
 
         <TouchableOpacity style={styles.commandButton} onPress={handleSubmit(onSubmit)}>

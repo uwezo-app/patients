@@ -1,17 +1,17 @@
-import React, {useRef, useState}  from 'react';
+import React, {useState}  from 'react';
 import { Controller, useForm } from "react-hook-form";
 import styles from'./styles'
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity,Text, View, Image, GestureResponderEvent, Button} from 'react-native';
+import { TouchableOpacity,Text, View, Image} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { Fontisto, MaterialIcons } from '@expo/vector-icons';
+import { Fontisto, Ionicons } from '@expo/vector-icons';
 
 
 
 
 
 interface FormData{
-  Email:string;
+  UserName:string;
   Password:string;
   Cpassword:string;
   
@@ -25,7 +25,7 @@ const Login = () => {
  }
     const { control,formState: { errors }, handleSubmit}= useForm({
       defaultValues:{
-        Email: "",
+        UserName: "",
         Password:""
       }
     });
@@ -55,7 +55,7 @@ const Login = () => {
         if(data.status===200){
           navigation.navigate('Root');
         }else{
-          console.log(" Email or Password is Incorrect");
+          console.log(" UserName or Password is Incorrect");
          
         }
       }
@@ -82,23 +82,23 @@ const Login = () => {
      <Text style={{ alignSelf:'center', marginTop: 10, fontSize: 25}}>Login</Text>
        
      
-      <View style={styles.action}>
-      <MaterialIcons name="email" color={'black'} size={15} />
-      <Controller
+     <View style={styles.action}>
+       <Ionicons name="person" color={'black'} size={15} />
+       <Controller
         control={control}
         rules={{
          required: true,
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput placeholder="Email" style={styles.textInput} autoCompleteType="email" onChangeText={onChange} onBlur={onBlur}
+        render={({ field: { onChange, onBlur } }) => (
+          <TextInput placeholder="Set a Username" style={styles.textInput} autoCompleteType="name" onChangeText={onChange} onBlur={onBlur}
           />
          )}
-         name="Email" 
+         name="UserName" 
          defaultValue=""
         />
        
-        {errors.Email &&  <Text>Required</Text>}
-     </View>
+        {errors.UserName &&  <Text>Required</Text>}
+</View> 
 
     
      <View style={styles.action}>

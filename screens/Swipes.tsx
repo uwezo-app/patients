@@ -4,7 +4,7 @@ import Constants from 'expo-constants'
 import axios from 'axios'
 import SwipesBottomBar from '../components/SwipesBottomBar/SwipesBottomBar'
 import Swipes from '../components/Swipes/Swipes'
-import Psychologists from '../data/Psychologists'
+
 
 export default function SwipeScreen() {
   const [users, setUsers] = useState([])
