@@ -21,7 +21,7 @@ const handlePassPress=()=>  {
        
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}  onPress={handlePassPress}>
-      <Entypo name="message" size={27} color="#F06795"></Entypo>
+      <Entypo name="message" size={27} color="#12AD2B"></Entypo>
       </TouchableOpacity>
       <View />
     </View>
