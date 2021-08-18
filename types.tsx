@@ -13,8 +13,6 @@ export type RootStackParamList = {
   LandingPage:undefined;
   ProfileScreen:undefined;
   EditProfileScreen:undefined;
-  PasswordReset:undefined;
-  GetEmail:undefined;
   Swipe:undefined;
 };
 

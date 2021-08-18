@@ -23,8 +23,6 @@
  import ProfileScreen from '../screens/ProfileScreen';
  import EditProfileScreen from '../screens/EditProfileScreen';
  import { useState } from 'react';
- import GetEmail from '../components/Password Reset/GetEmail';
- import PasswordReset from '../components/Password Reset/PasswordReset';
 import Psychologists from '../screens/Psychologists';
 import SwipeScreen from '../screens/Swipes';
  
@@ -99,16 +97,7 @@ import SwipeScreen from '../screens/Swipes';
        component={ProfileScreen} 
           
        />
-       <Stack.Screen 
-       name="GetEmail" 
-       component={GetEmail} 
-          
-       />
-       <Stack.Screen 
-       name="PasswordReset" 
-       component={PasswordReset} 
-          
-       />
+      
        <Stack.Screen 
        name="EditProfileScreen" 
        component={EditProfileScreen} 
