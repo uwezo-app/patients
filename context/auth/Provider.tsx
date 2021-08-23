@@ -16,7 +16,7 @@ const AuthProvider: React.FC<AuthProps> = ({ children }) => {
       param.setServerErrors([]);
 
       const response = await fetch(
-        `${process.env.REACT_NATIVE_GC_APP_URL}/register`,
+        `${process.env.REACT_NATIVE_GC_APP_URL}/patient/register`,
         {
           method: "POST",
           headers: {
@@ -26,6 +26,7 @@ const AuthProvider: React.FC<AuthProps> = ({ children }) => {
           body: JSON.stringify(param.body),
         }
       );
+
       if (response.ok && response.status === 201) {
         await response.json();
         param.navigation.navigate("Login");
@@ -59,32 +60,29 @@ const AuthProvider: React.FC<AuthProps> = ({ children }) => {
         setToken(user.Token);
         param.navigation.navigate("Root");
       } else {
-        console.log(response.statusText);
+        param.setServerErrors([response.statusText]);
       }
     }
     param.setIsSubmitting(false);
   };
 
-  const logout = async ({ isSubmitting, setIsSubmitting, navigation }: any) => {
-    if (!isSubmitting) {
-      setIsSubmitting(true);
-      const response = await fetch(
-        `${process.env.REACT_NATIVE_GC_APP_URL}/logout`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-
-      if (response.ok && response.status === 200) {
-        const t = await response.text();
-        setToken(t);
-        navigation.navigate("LandingPage");
-      } else {
-        console.log(response.statusText);
+  const logout = async ({ navigation }: any) => {
+    const response = await fetch(
+      `${process.env.REACT_NATIVE_GC_APP_URL}/patient/logout`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
       }
+    );
+
+    if (response.ok && response.status === 200) {
+      const t = await response.text();
+      setToken(t);
+      navigation.navigate("LandingPage");
+    } else {
+      console.log(response.statusText);
     }
   };
 
