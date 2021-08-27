@@ -18,5 +18,4 @@ export default [{
     id: '5',
     category: 'Traumas',
     imageUri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/4.jpg',
-  }]
-  
+  }];

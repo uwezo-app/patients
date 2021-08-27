@@ -7,12 +7,12 @@ import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import {
-  Alert,
-  ColorSchemeName,
-  Modal,
-  Pressable,
-  Text,
-  StyleSheet,
+	Alert,
+	ColorSchemeName,
+	Modal,
+	Pressable,
+	Text,
+	StyleSheet,
 } from "react-native";
 
 import { View, TouchableOpacity } from "react-native";
@@ -35,18 +35,18 @@ import SwipeScreen from "../screens/Swipes";
 import AuthContext from "../context/auth/context";
 
 export default function Navigation({
-  colorScheme,
+	colorScheme,
 }: {
-  colorScheme: ColorSchemeName;
+	colorScheme: ColorSchemeName;
 }) {
-  return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === "light" ? DefaultTheme : DefaultTheme}
-    >
-      <RootNavigator />
-    </NavigationContainer>
-  );
+	return (
+		<NavigationContainer
+			linking={LinkingConfiguration}
+			theme={colorScheme === "light" ? DefaultTheme : DefaultTheme}
+		>
+			<RootNavigator />
+		</NavigationContainer>
+	);
 }
 
 // A root stack navigator is often used for displaying modals on top of all other content
@@ -55,176 +55,176 @@ export default function Navigation({
 const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const [modalVisible, setModalVisible] = useState(false);
-  const authContext = React.useContext(AuthContext);
+	const [modalVisible, setModalVisible] = useState(false);
+	const authContext = React.useContext(AuthContext);
 
-  return (
-    <Stack.Navigator
-      initialRouteName="LandingPage"
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: "#12AD2B",
-          shadowOpacity: 0,
-          elevation: 0,
-        },
-        headerTintColor: "#fff",
-        headerTitleAlign: "left",
-        headerTitleStyle: {
-          fontWeight: "bold",
-        },
-      }}
-    >
-      <Stack.Screen
-        name="Root"
-        component={MainTabNavigator}
-        options={({ navigation }) => ({
-          title: "Uwezo App",
-          headerRight: () => {
-            return (
-              <View
-                style={{
-                  flexDirection: "row",
-                  width: 60,
-                  justifyContent: "space-between",
-                  marginRight: 10,
-                  backgroundColor: "#12AD2B",
-                }}
-              >
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("ProfileScreen")}
-                >
-                  <Ionicons name="person" size={22} color={"white"} />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => authContext.logout({ navigation })}
-                >
-                  <AntDesign name="logout" size={22} color={"white"} />
-                </TouchableOpacity>
-              </View>
-            );
-          },
-        })}
-      />
+	return (
+		<Stack.Navigator
+			initialRouteName="LandingPage"
+			screenOptions={{
+				headerStyle: {
+					backgroundColor: "#12AD2B",
+					shadowOpacity: 0,
+					elevation: 0,
+				},
+				headerTintColor: "#fff",
+				headerTitleAlign: "left",
+				headerTitleStyle: {
+					fontWeight: "bold",
+				},
+			}}
+		>
+			<Stack.Screen
+				name="Root"
+				component={MainTabNavigator}
+				options={({ navigation }) => ({
+					title: "Uwezo App",
+					headerRight: () => {
+						return (
+							<View
+								style={{
+									flexDirection: "row",
+									width: 60,
+									justifyContent: "space-between",
+									marginRight: 10,
+									backgroundColor: "#12AD2B",
+								}}
+							>
+								<TouchableOpacity
+									onPress={() => navigation.navigate("ProfileScreen")}
+								>
+									<Ionicons name="person" size={22} color={"white"} />
+								</TouchableOpacity>
+								<TouchableOpacity
+									onPress={() => authContext.logout({ navigation })}
+								>
+									<AntDesign name="logout" size={22} color={"white"} />
+								</TouchableOpacity>
+							</View>
+						);
+					},
+				})}
+			/>
 
-      <Stack.Screen
-        name="ChatRoom"
-        component={ChatRoomScreen}
-        options={({ route }) => ({ title: route.params.name })}
-      />
+			<Stack.Screen
+				name="ChatRoom"
+				component={ChatRoomScreen}
+				options={({ route }) => ({ title: route.params.name })}
+			/>
 
-      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+			<Stack.Screen name="ProfileScreen" component={ProfileScreen} />
 
-      <Stack.Screen
-        name="EditProfileScreen"
-        component={EditProfileScreen}
-        options={() => ({
-          title: "Edit Profile",
-          headerRight: () => {
-            return (
-              <View
-                style={{
-                  flexDirection: "row",
-                  width: 60,
-                  justifyContent: "space-between",
-                  marginRight: 10,
-                  backgroundColor: "#12AD2B",
-                }}
-              >
-                <View style={styles.centeredView}>
-                  <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                      Alert.alert("Modal has been closed.");
-                      setModalVisible(!modalVisible);
-                    }}
-                  >
-                    <View style={styles.centeredView}>
-                      <View style={styles.modalView}>
-                        <Text style={styles.modalText}>
-                          Are you sure you want to delete your account?
-                        </Text>
-                        <Pressable
-                          style={[styles.button, styles.buttonClose]}
-                          onPress={() => setModalVisible(!modalVisible)}
-                        >
-                          <Text style={styles.textStyle}>I'd rather not</Text>
-                        </Pressable>
-                        <Pressable style={[styles.button, styles.buttonDelete]}>
-                          <Text style={styles.textStyle}>Yes I do.</Text>
-                        </Pressable>
-                      </View>
-                    </View>
-                  </Modal>
+			<Stack.Screen
+				name="EditProfileScreen"
+				component={EditProfileScreen}
+				options={() => ({
+					title: "Edit Profile",
+					headerRight: () => {
+						return (
+							<View
+								style={{
+									flexDirection: "row",
+									width: 60,
+									justifyContent: "space-between",
+									marginRight: 10,
+									backgroundColor: "#12AD2B",
+								}}
+							>
+								<View style={styles.centeredView}>
+									<Modal
+										animationType="slide"
+										transparent={true}
+										visible={modalVisible}
+										onRequestClose={() => {
+											Alert.alert("Modal has been closed.");
+											setModalVisible(!modalVisible);
+										}}
+									>
+										<View style={styles.centeredView}>
+											<View style={styles.modalView}>
+												<Text style={styles.modalText}>
+													Are you sure you want to delete your account?
+												</Text>
+												<Pressable
+													style={[styles.button, styles.buttonClose]}
+													onPress={() => setModalVisible(!modalVisible)}
+												>
+													<Text style={styles.textStyle}>I'd rather not</Text>
+												</Pressable>
+												<Pressable style={[styles.button, styles.buttonDelete]}>
+													<Text style={styles.textStyle}>Yes I do.</Text>
+												</Pressable>
+											</View>
+										</View>
+									</Modal>
 
-                  <TouchableOpacity>
-                    <AntDesign
-                      name="deleteuser"
-                      color={"white"}
-                      size={30}
-                      onPress={() => setModalVisible(true)}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            );
-          },
-        })}
-      />
+									<TouchableOpacity>
+										<AntDesign
+											name="deleteuser"
+											color={"white"}
+											size={30}
+											onPress={() => setModalVisible(true)}
+										/>
+									</TouchableOpacity>
+								</View>
+							</View>
+						);
+					},
+				})}
+			/>
 
-      <Stack.Screen name="LandingPage" component={LandingPage} />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Swipe" component={SwipeScreen} />
-      <Stack.Screen name="Psychs" component={Psychologists} />
-      <Stack.Screen name="Registration" component={Registration} />
-    </Stack.Navigator>
-  );
+			<Stack.Screen name="LandingPage" component={LandingPage} />
+			<Stack.Screen name="Login" component={Login} />
+			<Stack.Screen name="Swipe" component={SwipeScreen} />
+			<Stack.Screen name="Psychs" component={Psychologists} />
+			<Stack.Screen name="Registration" component={Registration} />
+		</Stack.Navigator>
+	);
 }
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 15,
-    elevation: 2,
-    marginBottom: 10,
-  },
-  buttonOpen: {
-    backgroundColor: "#12AD2B",
-  },
-  buttonClose: {
-    backgroundColor: "#12AD2B",
-  },
-  buttonDelete: {
-    backgroundColor: "red",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-  },
+	centeredView: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		marginTop: 22,
+	},
+	modalView: {
+		margin: 20,
+		backgroundColor: "white",
+		borderRadius: 20,
+		padding: 35,
+		alignItems: "center",
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 4,
+		elevation: 5,
+	},
+	button: {
+		borderRadius: 20,
+		padding: 15,
+		elevation: 2,
+		marginBottom: 10,
+	},
+	buttonOpen: {
+		backgroundColor: "#12AD2B",
+	},
+	buttonClose: {
+		backgroundColor: "#12AD2B",
+	},
+	buttonDelete: {
+		backgroundColor: "red",
+	},
+	textStyle: {
+		color: "white",
+		fontWeight: "bold",
+		textAlign: "center",
+	},
+	modalText: {
+		marginBottom: 15,
+		textAlign: "center",
+	},
 });
