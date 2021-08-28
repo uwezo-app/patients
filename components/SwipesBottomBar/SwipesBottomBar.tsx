@@ -4,32 +4,72 @@ import { AntDesign, Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 import WSContext from "../../context/websocket/context";
+import AuthContext from "../../context/auth/context";
+import ButtonWithSpinner from "../ButtonWithSpinner/ButtonWithSpinner";
 
 export default function SwipesBottomBar({ user }: { user: any }) {
 	const navigation = useNavigation();
-	const wSContext = React.useContext(WSContext);
+	const wsContext = React.useContext(WSContext);
+	const authContext = React.useContext(AuthContext);
+	const [isLoading, setIsLoading] = React.useState(false);
 
 	const handleLikePress = () => {
 		navigation.navigate("Psychs");
 	};
-	const handlePassPress = () => {
+
+	const handlePassPress = async () => {
 		console.log("Request Sent!");
-		wSContext.send(
-			JSON.stringify({
-				Flag: "connectMe",
-				RecipientID: user.ID,
-			})
-		);
+		if (!isLoading) {
+			setIsLoading(true);
+			const response = await fetch(
+				`${process.env.REACT_NATIVE_GC_APP_URL}/chats/pair`,
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						PatientID: authContext.User.ID,
+						PsychologistID: user.ID,
+						EncryptionKey: "a%&$$smLPHbGDWW)",
+						PairedAt: new Date(Date.now()).toISOString(),
+					}),
+				}
+			);
+
+			if (response.ok && response.status === 201) {
+				const data = await response.json();
+				console.log(data);
+				wsContext.setwsInfoState({
+					ConversationID: data.ConversationID,
+					UserID: user.ID,
+					UserName: user.FirstName + " " + user.LastName,
+					UserAvatar: user.Profile.Image,
+				});
+				console.log(wsContext.wsInfo);
+				navigation.navigate("ChatRoom", { connectionInfo: wsContext.wsInfo });
+			} else {
+				if (response.status === 404)
+					Alert.alert("Error!", "Psychologist not connected");
+			}
+		}
+		setIsLoading(false);
 	};
+
 	return (
 		<View style={styles.container}>
 			<View />
 			<TouchableOpacity style={styles.button} onPress={handleLikePress}>
 				<AntDesign name="back" size={27} color="#64EDCC"></AntDesign>
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.button} onPress={handlePassPress}>
+			<ButtonWithSpinner
+				styles={styles.button}
+				isSubmitting={isLoading}
+				onPress={handlePassPress}
+			>
 				<Entypo name="message" size={27} color="#12AD2B"></Entypo>
-			</TouchableOpacity>
+			</ButtonWithSpinner>
+
 			<View />
 		</View>
 	);

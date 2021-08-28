@@ -7,7 +7,14 @@ export type RootStackParamList = {
 	Root: undefined;
 	NotFound: undefined;
 	Psychs: { category: string };
-	ChatRoom: undefined;
+	ChatRoom: {
+		connectionInfo: {
+			ConversationID: string;
+			UserID: string;
+			UserName: string;
+			UserAvatar: string;
+		};
+	};
 	Registration: undefined;
 	Login: undefined;
 	LandingPage: undefined;

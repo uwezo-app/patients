@@ -13,6 +13,21 @@ const WebSocketsProvider = (props: WebSocketsProviderProps) => {
 			`wss://${process.env.REACT_NATIVE_GC_APP_URL}/chat?tokenString=`
 		)
 	);
+	const [wsInfo, setwsInfo] = React.useState<{
+		ConversationID: string;
+		UserID: string;
+		UserName: string;
+		UserAvatar: string;
+	}>({ ConversationID: "", UserID: "", UserName: "", UserAvatar: "" });
+
+	const setwsInfoState = (wsInfo: {
+		ConversationID: string;
+		UserID: string;
+		UserName: string;
+		UserAvatar: string;
+	}) => {
+		setwsInfo(wsInfo);
+	};
 
 	const setConn = (connection: WebSocket) => {
 		setConnection(connection);
@@ -47,12 +62,14 @@ const WebSocketsProvider = (props: WebSocketsProviderProps) => {
 	};
 
 	const send = (message: any) => {
-		connection.send(JSON.stringify(message));
+		console.log(message);
+		connection.send(message);
 	};
 
 	return (
 		<WebSocketsContext.Provider
 			value={{
+				wsInfo,
 				connection,
 
 				onopen,
@@ -62,6 +79,7 @@ const WebSocketsProvider = (props: WebSocketsProviderProps) => {
 
 				send,
 				setConn,
+				setwsInfoState,
 			}}
 		>
 			{props.children}

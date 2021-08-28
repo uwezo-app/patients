@@ -109,7 +109,9 @@ function RootNavigator() {
 			<Stack.Screen
 				name="ChatRoom"
 				component={ChatRoomScreen}
-				options={({ route }) => ({ title: route.params.name })}
+				options={({ route }) => ({
+					title: route.params?.connectionInfo.UserName,
+				})}
 			/>
 
 			<Stack.Screen name="ProfileScreen" component={ProfileScreen} />

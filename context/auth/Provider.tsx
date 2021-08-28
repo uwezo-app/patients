@@ -1,15 +1,13 @@
 import React from "react";
 
 import Context from "./context";
-import WSContext from "../websocket/context";
+import WS from "../websocket/ws";
 
 interface AuthProps {
 	children: JSX.Element | JSX.Element[];
 }
 
 const AuthProvider: React.FC<AuthProps> = ({ children }) => {
-	const wsContext = React.useContext(WSContext);
-
 	const [token, setToken] = React.useState("");
 	const [user, setUser] = React.useState();
 
@@ -61,13 +59,12 @@ const AuthProvider: React.FC<AuthProps> = ({ children }) => {
 				const user = await response.json();
 				setUser(user.User);
 				setToken(user.Token);
-				const connection = new WebSocket(
+				WS.init(
 					`wss://uwezo-app-323117.uc.r.appspot.com/chat?tokenString=${user.Token}`
 				);
-				connection.onopen = () => {
-					wsContext.setConn(connection);
-					console.log("connected");
-				};
+
+				WS.onOpen(console.log);
+				WS.onClose(console.log);
 				param.navigation.navigate("Root");
 			} else {
 				param.setServerErrors([response.statusText]);
