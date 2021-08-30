@@ -110,7 +110,7 @@ function RootNavigator() {
 				name="ChatRoom"
 				component={ChatRoomScreen}
 				options={({ route }) => ({
-					title: route.params?.connectionInfo.UserName,
+					title: route.params.name,
 				})}
 			/>
 
