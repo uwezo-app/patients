@@ -16,17 +16,14 @@ const AuthProvider: React.FC<AuthProps> = ({ children }) => {
 			param.setIsSubmitting(true);
 			param.setServerErrors([]);
 
-			const response = await fetch(
-				`${process.env.REACT_NATIVE_GC_APP_URL}/patient/register`,
-				{
-					method: "POST",
-					headers: {
-						"Content-type": "application/json",
-						Accept: "application/json",
-					},
-					body: JSON.stringify(param.body),
-				}
-			);
+			const response = await fetch(`http://localhost:8000/patient/register`, {
+				method: "POST",
+				headers: {
+					"Content-type": "application/json",
+					Accept: "application/json",
+				},
+				body: JSON.stringify(param.body),
+			});
 
 			if (response.ok && response.status === 201) {
 				await response.json();
@@ -43,25 +40,20 @@ const AuthProvider: React.FC<AuthProps> = ({ children }) => {
 			param.setIsSubmitting(true);
 			param.setServerErrors([]);
 
-			const response = await fetch(
-				`${process.env.REACT_NATIVE_GC_APP_URL}/patient/login`,
-				{
-					method: "POST",
-					headers: {
-						"Content-type": "application/json",
-						Accept: "application/json",
-					},
-					body: JSON.stringify(param.authInfo),
-				}
-			);
+			const response = await fetch(`http://localhost:8000/patient/login`, {
+				method: "POST",
+				headers: {
+					"Content-type": "application/json",
+					Accept: "application/json",
+				},
+				body: JSON.stringify(param.authInfo),
+			});
 
 			if (response.ok && response.status === 200) {
 				const user = await response.json();
 				setUser(user.User);
 				setToken(user.Token);
-				WS.init(
-					`wss://uwezo-app-323117.uc.r.appspot.com/chat?tokenString=${user.Token}`
-				);
+				WS.init(`ws://localhost:/chat?tokenString=${user.Token}`);
 
 				WS.onOpen(console.log);
 				WS.onClose(console.log);
@@ -74,15 +66,12 @@ const AuthProvider: React.FC<AuthProps> = ({ children }) => {
 	};
 
 	const logout = async ({ navigation }: any) => {
-		const response = await fetch(
-			`${process.env.REACT_NATIVE_GC_APP_URL}/patient/logout`,
-			{
-				method: "GET",
-				headers: {
-					Authorization: "Bearer " + token,
-				},
-			}
-		);
+		const response = await fetch(`http://localhost:8000/patient/logout`, {
+			method: "GET",
+			headers: {
+				Authorization: "Bearer " + token,
+			},
+		});
 
 		if (response.ok && response.status === 200) {
 			const t = await response.text();

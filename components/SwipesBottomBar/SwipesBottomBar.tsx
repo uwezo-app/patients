@@ -21,21 +21,18 @@ export default function SwipesBottomBar({ user }: { user: any }) {
 		console.log("Request Sent!");
 		if (!isLoading) {
 			setIsLoading(true);
-			const response = await fetch(
-				`${process.env.REACT_NATIVE_GC_APP_URL}/chats/pair`,
-				{
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						PatientID: authContext.User.ID,
-						PsychologistID: user.ID,
-						EncryptionKey: "a%&$$smLPHbGDWW)",
-						PairedAt: new Date(Date.now()).toISOString(),
-					}),
-				}
-			);
+			const response = await fetch(`http://localhost:8000/chats/pair`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					PatientID: authContext.User.ID,
+					PsychologistID: user.ID,
+					EncryptionKey: "a%&$$smLPHbGDWW)",
+					PairedAt: new Date(Date.now()).toISOString(),
+				}),
+			});
 
 			if (response.ok && response.status === 201) {
 				const data = await response.json();

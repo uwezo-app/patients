@@ -9,9 +9,7 @@ interface WebSocketsProviderProps {
 
 const WebSocketsProvider = (props: WebSocketsProviderProps) => {
 	const [connection, setConnection] = React.useState<WebSocket>(
-		new WebSocket(
-			`wss://${process.env.REACT_NATIVE_GC_APP_URL}/chat?tokenString=`
-		)
+		new WebSocket(`ws://http://localhost:8000/chat?tokenString=`)
 	);
 	const [wsInfo, setwsInfo] = React.useState<{
 		ConversationID: string;

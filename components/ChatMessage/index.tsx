@@ -1,36 +1,40 @@
 import React from "react";
+import { Message } from "../../types";
 import { View, Text } from "react-native";
 import moment from "moment";
-
-import { Message } from "../../types";
 import styles from "./styles";
 
+import AuthContext from "../../context/auth/context";
+
 export type ChatMessageProps = {
-	message: Message;
+	message: any;
 };
+
 const ChatMessage = (props: ChatMessageProps) => {
 	const { message } = props;
+	const authCtx = React.useContext(AuthContext);
 
 	const isMyMessage = () => {
-		return message.user.id == "u1";
+		return message.From == authCtx.User.ID;
 	};
+
 	return (
 		<View style={styles.container}>
 			<View
 				style={[
 					styles.messageBox,
 					{
-						backgroundColor: isMyMessage() ? "#DCF8C5" : "white",
+						backgroundColor: isMyMessage() ? "#DCF8C5" : "#e5e5e5",
 						marginLeft: isMyMessage() ? 50 : 0,
 						marginRight: isMyMessage() ? 0 : 50,
 					},
 				]}
 			>
-				{!isMyMessage() && <Text style={styles.name}>{message.user.name}</Text>}
-				<Text style={styles.message}>{message.content}</Text>
-				<Text style={styles.time}>
-					{moment(message.createdAt as any).fromNow()}
-				</Text>
+				{!isMyMessage() && (
+					<Text style={styles.name}>{authCtx.User.NicName}</Text>
+				)}
+				<Text style={styles.message}>{message.Message}</Text>
+				<Text style={styles.time}>{moment(message.SentAt).fromNow()}</Text>
 			</View>
 		</View>
 	);

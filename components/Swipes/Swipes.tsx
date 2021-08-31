@@ -4,13 +4,14 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 import { RectButton } from "react-native-gesture-handler";
 import SwipeableImage from "../SwipeableImage/SwipeableImage";
 
-function Swipes(myProp: {
+type SwipeableProps = {
 	user: any;
-	currentIndex: number;
-	swipesRef: React.LegacyRef<Swipeable> | undefined;
+	swipesRef?: React.LegacyRef<Swipeable> | undefined;
 	handleLike: () => void;
 	handlePass: () => void;
-}) {
+};
+
+function Swipes(myProp: SwipeableProps) {
 	const renderLeftActions = () => {
 		return (
 			<RectButton style={styles.container}>
@@ -52,6 +53,6 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default React.forwardRef((props, ref) => (
+export default React.forwardRef((props: SwipeableProps, ref: any) => (
 	<Swipes swipesRef={ref} {...props} />
 ));
