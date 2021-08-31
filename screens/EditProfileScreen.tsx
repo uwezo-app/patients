@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   Text,
@@ -8,88 +8,83 @@ import {
   StyleSheet,
   Platform,
   KeyboardAvoidingView,
-} from 'react-native';
+} from "react-native";
 
-import {useTheme} from 'react-native-paper';
-import  {MaterialCommunityIcons, MaterialIcons, Ionicons } from '@expo/vector-icons';
-import BottomSheet from 'reanimated-bottom-sheet';
-import Animated from 'react-native-reanimated';
+import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
+import BottomSheet from "reanimated-bottom-sheet";
+import Animated from "react-native-reanimated";
 
-import * as ImagePicker from 'expo-image-picker';
-import { Controller, useForm } from 'react-hook-form';
- interface FormData{
-   
-  FirstName:string;
-  LastName:string;
-  Email:string;
-  Description:string;
-  Phone:string;
-  Category:string;
- }
+import * as ImagePicker from "expo-image-picker";
+import { Controller, useForm } from "react-hook-form";
 
+import AuthContext from "../context/auth/context";
 
-  const EditProfileScreen = () => {
-    const {control,formState: { errors }, handleSubmit}= useForm<FormData>({
-      defaultValues:{
-        FirstName: "",
-        LastName: "",
-        Email: "",
-        Description:"",
-        Phone:"",
-        Category:"General",
+interface FormData {
+  NickName: string;
+}
 
+const EditProfileScreen = () => {
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<FormData>({
+    defaultValues: {
+      NickName: "",
+    },
+  });
+
+  const authContext = React.useContext(AuthContext);
+
+  const [image, setImage] = useState(
+    "https://api.adorable.io/avatars/80/abott@adorable.png"
+  );
+
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
       }
+    })();
+  }, []);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
 
-    const [image, setImage] = useState('https://api.adorable.io/avatars/80/abott@adorable.png');
-    useEffect(() => {
-      (async () => {
-        if (Platform.OS !== 'web') {
-          const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-          if (status !== 'granted') {
-            alert('Sorry, we need camera roll permissions to make this work!');
-          }
-        }
-      })();
-    }, []);
-  
-    const pickImage = async () => {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-  
-      console.log(result);
-  
-      if (!result.cancelled) {
-        setImage(result.uri);
-      }
-    };
-    const camera = async () => {
-      let result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-  
-      console.log(result);
-  
-      if (!result.cancelled) {
-        setImage(result.uri);
-      }
-    };
-    const {colors} = useTheme();
-  
-    
+    console.log(result);
 
-  
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  const camera = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
 
   const renderInner = () => (
     <View style={styles.panel}>
-      <View style={{alignItems: 'center'}}>
+      <View style={{ alignItems: "center" }}>
         <Text style={styles.panelTitle}>Upload Photo</Text>
         <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
       </View>
@@ -101,7 +96,8 @@ import { Controller, useForm } from 'react-hook-form';
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.panelButton}
-        onPress={() => bs.current.snapTo(1)}>
+        onPress={() => bs.current.snapTo(1)}
+      >
         <Text style={styles.panelButtonTitle}>Cancel</Text>
       </TouchableOpacity>
     </View>
@@ -129,41 +125,47 @@ import { Controller, useForm } from 'react-hook-form';
         callbackNode={fall}
         enabledGestureInteraction={true}
       />
-      <Animated.View style={{margin: 20,
-        opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-    }}>
-        <View style={{alignItems: 'center'}}>
-        <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
+      <Animated.View
+        style={{
+          margin: 20,
+          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+        }}
+      >
+        <View style={{ alignItems: "center" }}>
+          <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
             <View
               style={{
                 height: 100,
                 width: 100,
                 borderRadius: 15,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <ImageBackground
                 source={{
                   uri: image,
                 }}
-                style={{height: 100, width: 100}}
-                imageStyle={{borderRadius: 15}}>
+                style={{ height: 100, width: 100 }}
+                imageStyle={{ borderRadius: 15 }}
+              >
                 <View
                   style={{
                     flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <MaterialCommunityIcons
                     name="camera"
                     size={35}
                     color="#fff"
                     style={{
                       opacity: 0.7,
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      alignItems: "center",
+                      justifyContent: "center",
                       borderWidth: 1,
-                      borderColor: '#fff',
+                      borderColor: "#fff",
                       borderRadius: 10,
                     }}
                   />
@@ -171,127 +173,39 @@ import { Controller, useForm } from 'react-hook-form';
               </ImageBackground>
             </View>
           </TouchableOpacity>
-          <Text style={{marginTop: 10, fontSize: 18, fontWeight: 'bold'}}>
-            John Doe
+          <Text style={{ marginTop: 10, fontSize: 18, fontWeight: "bold" }}>
+            {authContext.User.NickName}
           </Text>
         </View>
 
         <View style={styles.action}>
-       <Ionicons name="person" color={'black'} size={15} />
-       <Controller
-        control={control}
-        rules={{
-         required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput placeholder="First Name" style={styles.textInput} autoCompleteType="name" onChangeText={onChange} onBlur={onBlur}
+          <Ionicons name="person" color={"black"} size={15} />
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                placeholder="First Name"
+                style={styles.textInput}
+                autoCompleteType="name"
+                onChangeText={onChange}
+                onBlur={onBlur}
+                value={value}
+              />
+            )}
+            name="NickName"
+            defaultValue=""
           />
-         )}
-         name="FirstName" 
-         defaultValue=""
-        />
-       
-        {errors.FirstName &&  <Text>Required</Text>}
-</View> 
 
-     
+          {errors.NickName && <Text>Required</Text>}
+        </View>
 
-<View style={styles.action}>
-        <Ionicons name="person" color={'black'} size={15} />
-        <Controller
-        control={control}
-        rules={{
-         required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput placeholder="Last Name" style={styles.textInput} autoCompleteType="name" onChangeText={onChange} onBlur={onBlur}
-          />
-         )}
-         name="LastName" 
-         defaultValue=""
-        />
-       
-        {errors.FirstName &&  <Text>Required</Text>}
-</View>    
-     
-
-      <View style={styles.action}>
-      <MaterialIcons name="email" color={'black'} size={15} />
-        <Controller
-        control={control}
-        rules={{
-         required: false,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput placeholder="Email" style={styles.textInput} autoCompleteType="email" onChangeText={onChange} onBlur={onBlur}
-          />
-         )}
-         name="Email" 
-         defaultValue=""
-        />
-       
-        {errors.Email &&  <Text>Required</Text>}
-     </View>
-     <View style={styles.action}>
-      <MaterialIcons name="phone" color={'black'} size={15} />
-        <Controller
-        control={control}
-        rules={{
-         required: false,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput placeholder="Phone Number" style={styles.textInput} autoCompleteType="cc-number" onChangeText={onChange} onBlur={onBlur}
-          />
-         )}
-         name="Phone" 
-         defaultValue=""
-        />
-       
-        {errors.Email &&  <Text>Required</Text>}
-     </View>
-     <View style={styles.action}>
-      <MaterialIcons name="category" color={'black'} size={15} />
-        <Controller
-        control={control}
-        rules={{
-         required: false,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput placeholder="Category" style={styles.textInput} autoCompleteType="name" onChangeText={onChange} onBlur={onBlur}
-          />
-         )}
-         name="Category" 
-         defaultValue="General"
-        />
-       
-        {errors.Category &&  <Text>Required</Text>}
-     </View>
-    
-     
-     <View style={styles.action}>
-      <MaterialIcons name="description" color={'black'} size={15} />
-        <Controller
-        control={control}
-        rules={{
-         required: false,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput multiline numberOfLines={2} placeholder="Description" style={styles.textInput} autoCompleteType="name" onChangeText={onChange} onBlur={onBlur}
-          />
-         )}
-         name="Description" 
-         defaultValue=""
-        />
-       
-        {errors.Description &&  <Text>Required</Text>}
-     </View>
-        
         <TouchableOpacity style={styles.commandButton} onPress={() => {}}>
           <Text style={styles.panelButtonTitle}>Submit</Text>
         </TouchableOpacity>
       </Animated.View>
-       
-       
     </KeyboardAvoidingView>
   );
 };
@@ -305,13 +219,13 @@ const styles = StyleSheet.create({
   commandButton: {
     padding: 15,
     borderRadius: 10,
-    backgroundColor: '#12AD2B',
-    alignItems: 'center',
+    backgroundColor: "#12AD2B",
+    alignItems: "center",
     marginTop: 10,
   },
   panel: {
     padding: 20,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     paddingTop: 20,
     // borderTopLeftRadius: 20,
     // borderTopRightRadius: 20,
@@ -321,9 +235,9 @@ const styles = StyleSheet.create({
     // shadowOpacity: 0.4,
   },
   header: {
-    backgroundColor: '#FFFFFF',
-    shadowColor: '#333333',
-    shadowOffset: {width: -1, height: -3},
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#333333",
+    shadowOffset: { width: -1, height: -3 },
     shadowRadius: 2,
     shadowOpacity: 0.4,
     // elevation: 5,
@@ -332,13 +246,13 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
   },
   panelHeader: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   panelHandle: {
     width: 40,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#00000040',
+    backgroundColor: "#00000040",
     marginBottom: 10,
   },
   panelTitle: {
@@ -347,46 +261,46 @@ const styles = StyleSheet.create({
   },
   panelSubtitle: {
     fontSize: 14,
-    color: 'gray',
+    color: "gray",
     height: 30,
     marginBottom: 10,
   },
   panelButton: {
     padding: 13,
     borderRadius: 10,
-    backgroundColor: '#12AD2B',
-    alignItems: 'center',
+    backgroundColor: "#12AD2B",
+    alignItems: "center",
     marginVertical: 7,
   },
   panelButtonTitle: {
     fontSize: 17,
-    fontWeight: 'bold',
-    color: 'white',
+    fontWeight: "bold",
+    color: "white",
   },
   action: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 10,
     marginBottom: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
+    borderBottomColor: "#f2f2f2",
     paddingBottom: 5,
   },
   actionError: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#FF0000',
+    borderBottomColor: "#FF0000",
     paddingBottom: 5,
   },
-  
+
   textInput: {
     flex: 1,
-    marginTop: Platform.OS === 'ios' ? 0 : -12,
+    marginTop: Platform.OS === "ios" ? 0 : -12,
     paddingLeft: 10,
-    color: '#05375a',
+    color: "#05375a",
   },
 });
 
 function onFileSeleceted(images: ImagePicker.ImageOrVideo) {
-  throw new Error('Function not implemented.');
+  throw new Error("Function not implemented.");
 }
